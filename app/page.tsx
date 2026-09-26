@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import MovieSearch from "@/components/MovieSearch";
+import { tmdbFetch } from "@/lib/tmdb";
 
 type Movie = {
   id: number;
@@ -17,19 +18,9 @@ type MoviesResponse = {
 };
 
 async function getMovies(): Promise<Movie[]> {
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
-
-  const response = await fetch(`${baseUrl}/api/movies`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch movies");
-  }
-
-  const data: MoviesResponse = await response.json();
+  const data = await tmdbFetch<MoviesResponse>(
+    "/movie/popular?language=en-US&page=1"
+  );
 
   return data.results;
 }
