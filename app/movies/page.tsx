@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import MovieDiscovery from "@/components/MovieDiscovery";
+import { tmdbFetch } from "@/lib/tmdb";
 
 type Movie = {
   id: number;
@@ -18,20 +19,11 @@ type MoviesResponse = {
 };
 
 async function getMovies(): Promise<MoviesResponse> {
-  const response = await fetch(
-    "http://localhost:3000/api/movies?page=1",
-    {
-      cache: "no-store",
-    }
+  const data = await tmdbFetch<MoviesResponse>(
+    "/movie/popular?language=en-US&page=1"
   );
 
-  if (!response.ok) {
-    throw new Error(
-      "Unable to load movies."
-    );
-  }
-
-  return response.json();
+  return data;
 }
 
 export default async function MoviesPage() {
@@ -86,14 +78,12 @@ export default async function MoviesPage() {
 
       {/* Bottom cinematic strip */}
       <div className="flex h-8 items-center justify-around border-y border-[#3a2b20] bg-[#11100e] opacity-70">
-        {Array.from({ length: 18 }).map(
-          (_, index) => (
-            <div
-              key={index}
-              className="h-3 w-5 rounded-sm border border-[#80633a]/40"
-            />
-          )
-        )}
+        {Array.from({ length: 18 }).map((_, index) => (
+          <div
+            key={index}
+            className="h-3 w-5 rounded-sm border border-[#80633a]/40"
+          />
+        ))}
       </div>
     </main>
   );
