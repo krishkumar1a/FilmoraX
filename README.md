@@ -109,16 +109,3 @@ filmorax/
 ├── auth.ts
 ├── package.json
 └── README.md
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/krishkumar1a/FilmoraX.git
-
-
-cd FilmoraX
-npm install
-
-
