@@ -21,45 +21,28 @@ type TMDBPopularResponse = {
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(
-      request.url
-    );
+    const { searchParams } = new URL(request.url);
 
-    const pageParam =
-      searchParams.get("page") || "1";
-
+    const pageParam = searchParams.get("page") || "1";
     const page = Number(pageParam);
 
-    if (
-      !Number.isInteger(page) ||
-      page < 1 ||
-      page > 500
-    ) {
+    if (!Number.isInteger(page) || page < 1 || page > 500) {
       return NextResponse.json(
-        {
-          error:
-            "Page must be between 1 and 500.",
-        },
+        { error: "Page must be between 1 and 500." },
         { status: 400 }
       );
     }
 
-    const data =
-      await tmdbFetch<TMDBPopularResponse>(
-        `/movie/popular?language=en-US&page=${page}`
-      );
+    const data = await tmdbFetch<TMDBPopularResponse>(
+      `/movie/popular?language=en-US&page=${page}`
+    );
 
     return NextResponse.json(data);
-   } catch (error) {
+  } catch (error) {
     console.error("Popular movies error:", error);
 
     return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unknown error",
-      },
+      { error: "Unable to load movies right now." },
       { status: 500 }
     );
   }
