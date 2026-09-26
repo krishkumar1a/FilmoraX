@@ -50,16 +50,15 @@ export async function GET(request: Request) {
       );
 
     return NextResponse.json(data);
-  } catch (error) {
-    console.error(
-      "Popular movies error:",
-      error
-    );
+   } catch (error) {
+    console.error("Popular movies error:", error);
 
     return NextResponse.json(
       {
         error:
-          "Unable to load movies right now.",
+          error instanceof Error
+            ? error.message
+            : "Unknown error",
       },
       { status: 500 }
     );
