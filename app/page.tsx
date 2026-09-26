@@ -17,19 +17,19 @@ type MoviesResponse = {
 };
 
 async function getMovies(): Promise<Movie[]> {
-  const response = await fetch(
-    "http://localhost:3000/api/movies",
-    {
-      cache: "no-store",
-    }
-  );
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
+  const response = await fetch(`${baseUrl}/api/movies`, {
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch movies");
   }
 
-  const data: MoviesResponse =
-    await response.json();
+  const data: MoviesResponse = await response.json();
 
   return data.results;
 }
