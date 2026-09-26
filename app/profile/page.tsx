@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import MyListsSection from "@/components/MyListsSection";
+import RemoveFavoriteButton from "@/components/RemoveFavoriteButton";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { tmdbFetch } from "@/lib/tmdb";
@@ -324,6 +325,12 @@ export default async function ProfilePage() {
                               </span>
 
                             </div>
+
+                            {/* Remove Favorite */}
+                            <RemoveFavoriteButton
+                              favoriteId={favorite.id}
+                            />
+
                           </>
                         ) : (
                           <p className="mt-2 text-sm text-[#625544]">
