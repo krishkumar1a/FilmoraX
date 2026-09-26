@@ -8,8 +8,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
 
@@ -17,19 +17,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user }) {
       if (!user.email) {
         return false;
-      }
-
-      const dbUser = await prisma.user.findUnique({
-        where: {
-          email: user.email,
-        },
-        select: {
-          username: true,
-        },
-      });
-
-      if (!dbUser?.username) {
-        return "/setup-username";
       }
 
       return true;
