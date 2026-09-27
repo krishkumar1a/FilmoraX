@@ -348,8 +348,7 @@ GitHub:
 https://github.com/krishkumar1a
 
 LinkedIn:  
-Add your LinkedIn profile here
-
+linkedin.com/in/krishkumar1a
 ---
 
 ## 📄 License
